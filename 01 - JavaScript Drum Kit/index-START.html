@@ -59,20 +59,28 @@
 
     <script>
       // + дать слушатели всем клавишам
-      // + добавить поддержку слушания через 
+      // + добавить поддержку слушания через
       const allButtons = document.querySelectorAll(".key");
       console.log(allButtons[0]);
 
-      
+      window.addEventListener("keydown", (e) => {
+        const { keyCode } = e;
+        const audio = document.querySelector(`audio[data-key="${keyCode}"]`);
+        const key = document.querySelector(`.key[data-key="${keyCode}"]`);
+        if (!audio) return;
+        audio.currentTime = 0
+        audio.play()
+        key.classList.add('playing')
+        setTimeout(() => key.classList.remove("playing"), 100)
+      });
 
       allButtons.forEach((item) => {
-        item.addEventListener('click', () => {
-          console.log('clicked');
+        item.addEventListener("click", () => {
+          console.log("clicked");
           // дать класс playing на 0.1 секунду и потом убрать его
-          item.classList.add('playing');
-          setTimeout(() => (item.classList.remove('playing')), 100)
-        })
-    
+          item.classList.add("playing");
+          setTimeout(() => item.classList.remove("playing"), 100);
+        });
       });
     </script>
   </body>
